@@ -1,0 +1,92 @@
+@import '_reset.scss';
+@import '_colors.scss';
+@import '_header.scss';
+@import '_main-screen.scss';
+@import '_questions.scss';
+@import '_btns.scss';
+@import '_counter.scss';
+
+:root{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+body {
+    height: 100%;
+    width: 100%;
+    background:rgb(28, 29, 35);//linear-gradient(97deg, #ff2300, #4aeabe);
+}
+//common classes
+.hidden-js {
+    display: none;
+}
+
+.hide-to-left-js {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;  
+    animation: hideToLeft;
+    animation-timing-function: all ease;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    transform-origin: center;
+}
+
+@keyframes hideToLeft {
+    0% {
+        opacity: 1;
+        transform: translateX(-50%);                
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-150%);       
+    }
+}
+
+footer {
+    width: 100%;
+    height: 100px;
+    font-size: 1.8rem;
+    background-color: $mainGreen;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    
+    &:hover::before {
+      content: '';
+      position: absolute;
+      background-color: #02a22c;
+      left: 0;
+      height: 100px;
+      animation: animateFoot;
+      animation-duration: 0.8s;
+      animation-fill-mode: forwards;
+      animation-timing-function: ease-in-out;
+
+    }
+    @keyframes animateFoot {
+      0% {
+        width: 0;
+      }
+      100%{
+        width: 100%;
+      }
+    }
+}
+
+.mail-link {
+    color: white;
+    display: inline-block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+

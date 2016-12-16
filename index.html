@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/css/main.css">
+    <title>Front-end Tests</title>
+</head>
+<body>
+    <header>
+
+    </header>
+    <main>
+        <section class="main-screen">
+            <h1 class="main-screen__title">App</h1>
+            <div class="main-screen__rules"><p>Test your knowledge on various categories connected with the Front-end development.(Currently in BETA stage only HTML category is avaible)</p></div>
+            <article class="main-screen__categories">
+                <h2 class="main-screen__categories__title">Select Category</h2>
+                <ul class="main-screen__categories-container">
+                <li class="main-screen__item"><a href="" class="btn btn__select-category ">HTML</a></li>
+                </ul> 
+            </article>
+        </section>
+        <section class="questions-container questions-container--hidden-js">
+            <h2 class="questions__title"></h2>
+            <article class="questions">               
+                <p class="questions__question"></p>
+                <ul>
+                    <li class="questions__answers"></li>
+                    <li class="questions__answers"></li>
+                    <li class="questions__answers"></li>
+                    <li class="questions__answers"><p></p></li>
+                </ul>
+                <div class="questions__counter">
+                    <span class="questions__current-count"></span>
+                    <span class="questions__total-count"></span>
+                </div>
+            </article>
+            <a href="" class="btn btn__next btn__next--hidden-js">Next question</a>
+        </section>
+        <section class="" >
+            <article class="score-section hidden-js">
+                <h2 class="score-section__title">FINAL SCORE</h2>
+                <div class="score-section__information">
+                    <span>Category:</span>
+                    <span class="score-section__category"></span>
+                    </div>
+                <div class="score-section__score ">
+                    <span class="score-section__score__val"></span>
+                    <span class="score-section__score__total"></span>
+                    </div>
+                    <a href="" class="btn btn__back-home">Back to Home</a>
+            </article>
+        </section>
+    </main>
+    <footer>
+        <a class="mail-link" href="mailto:martinkostadinov681@gmail.com">martinkostadinov681@gmail.com</a>
+    </footer>
+    <script src="scripts/index.js"></script>
+</body>
+</html>

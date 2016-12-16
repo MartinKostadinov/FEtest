@@ -1,0 +1,162 @@
+{
+    "nature": [{
+        "question": "What does it mean <!DOCTYPE html> at the start of the HTML file ?",
+        "answers": [{
+            "answer": "File is written in  XHTML 1.1 version ",
+            "valid": false
+        }, {
+            "answer": "File is written in XHTML 1.0 Strict version ",
+            "valid": false
+        }, {
+            "answer": "File  is written in  HTML 4.01 version ",
+            "valid": false
+        }, {
+            "answer": "File is written in HTML5 version ",
+            "valid": true
+        }]
+    }, {
+        "question": "Using Emmet the following ul>li*8 will add",
+        "answers": [{
+            "answer": "8 <ul> elements with 1 <li> element",
+            "valid": false
+        }, {
+            "answer": "8 <ul> elements and 8 <li> elements",
+            "valid": false
+        }, {
+            "answer": "1 <ul> element with 8 <li> elements",
+            "valid": true
+        }, {
+            "answer": "1 <ul> element with 8 <li> elements with values from 1 to 8",
+            "valid": false
+        }]
+    },
+    {
+        "question": "What should be on the first line for every HTML page",
+        "answers": [{
+            "answer": "The <html> tag",
+            "valid": false
+        }, {
+            "answer": "The <meta charset.. > element",
+            "valid": false
+        }, {
+            "answer": "The <title> element",
+            "valid": false
+        }, {
+            "answer": "The <DOCTYPE..> tag",
+            "valid": true
+        }]
+    },
+    {
+        "question": "What it is ARIA",
+        "answers": [{
+            "answer": "Accessible Rich Internet Applications",
+            "valid": true
+        }, {
+            "answer": "Accessible Rich Interactive Applications",
+            "valid": false
+        }, {
+            "answer": "Assynchronous Rich Interactive Applications",
+            "valid": false
+        }, {
+            "answer": "Assynchronous Responsive Interactive Applications",
+            "valid": false
+        }]
+    },
+    {
+        "question": "What it is  the purpose of  the attribute role='button' ?",
+        "answers": [{
+            "answer": "To add class button",
+            "valid": false
+        }, {
+            "answer": "ARIA attribute to tell that the element is button",
+            "valid": true
+        }, {
+            "answer": "Javascript function that is button",
+            "valid": false
+        }, {
+            "answer": "Nothing of the above, it is not a valid attrubute",
+            "valid": false
+        }]
+    },
+    {
+        "question": "According to latest version of HTML - 5.1 the mousewheel event is called ?",
+        "answers": [{
+            "answer": "mousewheel",
+            "valid": false
+        }, {
+            "answer": "wheel",
+            "valid": true
+        }, {
+            "answer": "mouseWheel",
+            "valid": false
+        }, {
+            "answer": "wheelscroll",
+            "valid": false
+        }]
+    },
+    {
+        "question": "What is the way to store extra information on standard HTML element in HTML5?",
+        "answers": [{
+            "answer": "With data-* attribute",
+            "valid": true
+        }, {
+            "answer": "With Node.setUserData",
+            "valid": false
+        }, {
+            "answer": "By creating a non-standard attributes",
+            "valid": false
+        }, {
+            "answer": "Thats not possible",
+            "valid": false
+        }]
+    },
+    {
+        "question": "Which one  of the following <input> types is invalid : hidden, time, input, color ?",
+        "answers": [{
+            "answer": "hidden",
+            "valid": false
+        }, {
+            "answer": "time",
+            "valid": false
+        }, {
+            "answer": "Non, all types are valid",
+            "valid": false
+        }, {
+            "answer": "input",
+            "valid": true
+        }]
+    },
+    {
+        "question": "What does the element <code> do ?",
+        "answers": [{
+            "answer": "Nothing it is not a valid element",
+            "valid": false
+        }, {
+            "answer": "Only in this element  can be written HTML",
+            "valid": false
+        }, {
+            "answer": "It's special element  that enables user to type code directly form the browser",
+            "valid": false
+        }, {
+            "answer": "It is an element that shows piece of computer code",
+            "valid": true
+        }]
+    },
+        {
+        "question": "What it is the best position for <meta charset=..>?",
+        "answers": [{
+            "answer": "At the start of the <head>",
+            "valid": true
+        }, {
+            "answer": "At the start of the <body>",
+            "valid": false
+        }, {
+            "answer": "After the  <html> and before <head>",
+            "valid": false
+        }, {
+            "answer": "At the start of the <header> element",
+            "valid": false
+        }]
+    }
+    ]
+}

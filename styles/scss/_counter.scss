@@ -1,0 +1,61 @@
+//corrcet answers counter  section
+.score-section {
+    width: calc(30% + 20em);
+    height: auto;
+    margin: 0 auto;
+    box-sizing: border-box;
+    border: 1px solid #2df060;
+    padding: 1em 0;
+    color: white;
+    text-align: center;
+}
+
+.score-section__title {
+    font-size: 3em;
+    border-bottom: 1px solid #2df060;
+    width: 100%;
+}
+
+.score-section__information {
+    display: inline-block;
+    border-right: 1px solid $mainGreen;
+    padding-right: 5px;
+
+    span:first-of-type {
+    display: block;
+    font-size: 2em;
+    }
+
+    span:last-of-type {
+     display: block;
+    font-size: 2em;
+    font-weight: 700;
+    }
+}
+
+.score-section__score {
+        display: inline-block;
+        position: relative;
+        padding-left: 5px;
+        
+}
+.score-section__score__val {
+    font-size: 5rem;
+    color: $mainGreen;
+    display: inline-block;
+    padding-right: 2rem;
+
+    &:after {
+    content: '';
+    width: 90px;
+    margin-top: -50%;
+    margin-left: 69%;
+    border: 1px solid red;
+    transform: rotate(120deg);
+    display: block;
+    }
+}
+
+.score-section__score__total {
+        font-size: 5em;
+}

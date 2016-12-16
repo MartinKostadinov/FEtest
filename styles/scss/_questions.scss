@@ -1,0 +1,119 @@
+@import '_mixins.scss';
+
+.questions-container--hidden-js {
+    display: none;
+}
+
+.questions-container--visible-js {
+    position: relative;
+    animation: showQuestions;
+    animation-duration: 0.4s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+@keyframes showQuestions {
+    0% {
+        opacity: 0;
+       left: 150%; 
+    }
+    100% {
+        opacity: 1;
+        left: 0;
+    }
+}
+
+.questions { 
+    width: 70%;
+    padding: 1.5em;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid $mainGreen;
+    color: white;
+}
+
+.questions__title {
+    margin-bottom: 1em;
+    font-size: 2em;
+    font-weight: 700;
+    text-align: center;
+    color: white;
+}
+
+.questions__question {
+    width: 90%;
+    text-align: center;  
+    margin: 0 auto;
+}
+
+.questions__answers {
+    width: 33%;
+    height: 3em;
+    padding: 1em;
+    margin-top: 1em;
+    margin-left: 1em;
+    display: inline-block;
+    vertical-align: top;
+    border: 1px solid $mainGreen;
+    font-size: 0.9rem;
+    cursor: pointer;
+
+    @include tablet {
+        width: 50%;
+        height: auto;
+        display: block;
+        margin:0 auto;
+        margin-top: 1em;
+    }
+}
+
+.questions__answers--correct-js {
+    background-color:#02a22c;
+    animation: correctAnswer;
+    animation-timing-function: ease;
+    animation-duration: 1.2s;
+    animation-fill-mode: forwards;
+
+    @keyframes correctAnswer {
+        0% {  opacity: 0.5;          
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+}
+
+.questions__answers--wrong-js {
+    background-color: red;
+}
+
+.questions__counter {
+    position: absolute;
+    top: 7%;
+    right: 2%;
+    font-size: 1.5rem;
+
+    @include tablet {
+        top: 90%;
+    }
+}
+// questions counters
+.questions__current-count {
+    padding-right: 5px;
+
+}
+
+.questions__total-count {
+    display: inline-block;
+    padding-left: 5px;
+         &:after {
+         content: '';
+         display: inline-block;
+         position: absolute;
+         top: 12px;
+         right: 22px;
+         width: 1em;
+         border: 1px solid white;
+         transform: rotate(120deg);
+     }
+}

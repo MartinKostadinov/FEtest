@@ -1,0 +1,40 @@
+@import '_mixins.scss';
+//styles for all btns
+.btn {
+    display: block;
+    padding: 0.465em;
+    border-radius: 0.365em;
+    font-size: 1.5em;
+    font-weight: bold; 
+}
+.btn__next {
+    position: absolute;
+    right: 14.1%;
+    top: 105%;
+    border: 1px solid $mainGreen;
+    border-radius: 0;
+    color: $mainGreen;
+
+    @include tablet {
+        right: 11.3%;
+    }
+}
+.btn__select-category {
+    width: 7.5em;
+    margin:0 1.5em;
+    margin-bottom: 0.8em;
+    background-color: $mainGreen;
+    color: $bgColor;
+}
+.btn__next--hidden-js {
+    display: none;
+}
+
+.btn__back-home {
+    width: 7em;
+    margin: 1.5em auto;
+    border: 1px solid $mainGreen;
+    border-radius: 0;
+    color: $mainGreen;
+}
+ 
