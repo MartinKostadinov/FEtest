@@ -1,45 +1,49 @@
 //corrcet answers counter  section
 .score-section {
-    width: calc(30% + 20em);
+    width: calc(30% + 14em);
     height: auto;
     margin: 0 auto;
     box-sizing: border-box;
-    border: 1px solid #2df060;
+    border: 1px solid $mainGreen;
     padding: 1em 0;
     color: white;
     text-align: center;
 }
 
 .score-section__title {
-    font-size: 3em;
-    border-bottom: 1px solid #2df060;
     width: 100%;
+    font-size: 3rem;
+    border-bottom: 1px solid $mainGreen;   
 }
 
 .score-section__information {
     display: inline-block;
     border-right: 1px solid $mainGreen;
-    padding-right: 5px;
+    padding-right: 0.3125em;
+    
+    @include tablet  {
+        border: none;
+        margin: 1em;
+    }
 
-    span:first-of-type {
+    span {
     display: block;
     font-size: 2em;
     }
+}
 
-    span:last-of-type {
-     display: block;
-    font-size: 2em;
+.score-section__category {
     font-weight: 700;
     }
-}
 
 .score-section__score {
         display: inline-block;
         position: relative;
-        padding-left: 5px;
+        padding-left: 0.3125em;
         
 }
 .score-section__score__val {
+    width: 6rem;
     font-size: 5rem;
     color: $mainGreen;
     display: inline-block;
@@ -48,8 +52,8 @@
     &:after {
     content: '';
     width: 90px;
-    margin-top: -50%;
-    margin-left: 69%;
+    margin-top: -48%;
+    margin-left: 70%;
     border: 1px solid red;
     transform: rotate(120deg);
     display: block;

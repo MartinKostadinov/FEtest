@@ -1,26 +1,5 @@
 @import '_mixins.scss';
 
-.questions-container--hidden-js {
-    display: none;
-}
-
-.questions-container--visible-js {
-    position: relative;
-    animation: showQuestions;
-    animation-duration: 0.4s;
-    animation-timing-function: ease-in-out;
-    animation-fill-mode: forwards;
-}
-@keyframes showQuestions {
-    0% {
-        opacity: 0;
-       left: 150%; 
-    }
-    100% {
-        opacity: 1;
-        left: 0;
-    }
-}
 
 .questions { 
     width: 70%;
@@ -30,6 +9,13 @@
     text-align: center;
     border: 1px solid $mainGreen;
     color: white;
+    perspective: 200px;
+    perspective-origin: right;
+    transform-style: preserve-3d;
+
+    @include tablet  {
+        width: 75%;
+    }
 }
 
 .questions__title {
@@ -57,9 +43,13 @@
     border: 1px solid $mainGreen;
     font-size: 0.9rem;
     cursor: pointer;
+    transition: ease-in 0.4s;
+    &:hover {
+        border: 1px solid white;
+    }
 
     @include tablet {
-        width: 50%;
+        width: 90%;
         height: auto;
         display: block;
         margin:0 auto;
@@ -70,8 +60,8 @@
 .questions__answers--correct-js {
     background-color:#02a22c;
     animation: correctAnswer;
-    animation-timing-function: ease;
-    animation-duration: 1.2s;
+    animation-timing-function: ease-in;
+    animation-duration: 0.4s;
     animation-fill-mode: forwards;
 
     @keyframes correctAnswer {
@@ -84,23 +74,38 @@
 }
 
 .questions__answers--wrong-js {
-    background-color: red;
+    background-color:#c80a22;
 }
 
 .questions__counter {
     position: absolute;
-    top: 7%;
-    right: 2%;
+    top: 94%;
+    right: calc(0% - 0.7em);
+    padding: 0.2rem;
     font-size: 1.5rem;
-
+    background-color: $mainGreen;
+    transform-style: inherit;
+    
     @include tablet {
-        top: 90%;
+       
     }
+//3d  side
+    &:after {
+    content: '';
+    position: absolute;
+    top: 0%;
+    left: 100%;
+    height: 30px;
+    width: 25px;
+    background-color: $darkGreen;
+    transform-origin: left;
+    transform: rotateY(126deg);
+    }
+
 }
 // questions counters
 .questions__current-count {
     padding-right: 5px;
-
 }
 
 .questions__total-count {

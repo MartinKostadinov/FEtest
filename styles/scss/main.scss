@@ -5,10 +5,15 @@
 @import '_questions.scss';
 @import '_btns.scss';
 @import '_counter.scss';
+@import '_mixins.scss';
 
 :root{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
+     
+     @include  tablet {
+          font-size: 14px;  
+     }
 }
 ul {
     list-style-type: none;
@@ -31,12 +36,13 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    margin: 0;  
+    margin: 0;
     animation: hideToLeft;
     animation-timing-function: all ease;
     animation-duration: 0.4s;
     animation-fill-mode: forwards;
     transform-origin: center;
+
 }
 
 @keyframes hideToLeft {
@@ -46,7 +52,28 @@ body {
     }
     100% {
         opacity: 0;
-        transform: translateX(-150%);       
+
+        transform: translateX(-150%); 
+                visibility: hidden;      
+    }
+}
+
+.show-from-right-js {
+    position: relative;
+    animation: showQuestions;
+    animation-duration: 0.4s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+@keyframes showQuestions {
+    0% {
+        opacity: 0;
+       left: 150%; 
+    }
+    100% {
+        opacity: 1;
+        left: 0;
+        visibility: visible;
     }
 }
 
@@ -62,7 +89,7 @@ footer {
     &:hover::before {
       content: '';
       position: absolute;
-      background-color: #02a22c;
+      background-color: $darkGreen;
       left: 0;
       height: 100px;
       animation: animateFoot;
@@ -78,6 +105,10 @@ footer {
       100%{
         width: 100%;
       }
+    }
+
+    @include tablet  {
+        font-size: 1.3rem;
     }
 }
 

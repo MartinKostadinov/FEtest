@@ -1,0 +1,162 @@
+{
+    "nature": [{
+        "question": "What is the formula for the calculation of em/rem ?",
+        "answers": [{
+            "answer": "Desired PX / Font Size px ",
+            "valid": true
+        }, {
+            "answer": "Font Size px / Desired PX ",
+            "valid": false
+        }, {
+            "answer": " 1em/rem = 1px ",
+            "valid": false
+        }, {
+            "answer": "1em/rem = 10px ",
+            "valid": false
+        }]
+    }, {
+        "question": "In SASS the '$' is for ?",
+        "answers": [{
+            "answer": "mixin",
+            "valid": false
+        }, {
+            "answer": "include",
+            "valid": false
+        }, {
+            "answer": "variable",
+            "valid": true
+        }, {
+            "answer": "None of the above, '$' means jQuery",
+            "valid": false
+        }]
+    },
+    {
+        "question": "Which of the following properties can't be animated with CSS",
+        "answers": [{
+            "answer": "opacity",
+            "valid": false
+        }, {
+            "answer": "transform",
+            "valid": false
+        }, {
+            "answer": "display",
+            "valid": true
+        }, {
+            "answer": "position",
+            "valid": false
+        }]
+    },
+    {
+        "question": "How animation-delay works",
+        "answers": [{
+            "answer": "Delays the start of the animation, only the first time of her initiation",
+            "valid": true
+        }, {
+            "answer": "Delay is initiated, before every loop of the animation ",
+            "valid": false
+        }, {
+            "answer": "Delay is activated only when the animation is completed ",
+            "valid": false
+        }, {
+            "answer": "None, of the answers is true",
+            "valid": false
+        }]
+    },
+    {
+        "question": "What is the correct order for the box-shadow values in the answers below' ?",
+        "answers": [{
+            "answer": "offset-y, offset-x, blur-radius, spread-radius, color",
+            "valid": false
+        }, {
+            "answer": "offset-x, offset-y, blur-radius, spread-radius, color",
+            "valid": true
+        }, {
+            "answer": " blur-radius, spread-radius, offset-x, offset-y, color",
+            "valid": false
+        }, {
+            "answer": " blur-radius, spread-radius, offset-y, offset-x,",
+            "valid": false
+        }]
+    },
+    {
+        "question": "Using transform propery, which of it's values, allows to move element  left or right  ?",
+        "answers": [{
+            "answer": "translateX",
+            "valid": true
+        }, {
+            "answer": "translateY",
+            "valid": false
+        }, {
+            "answer": "horizontal",
+            "valid": false
+        }, {
+            "answer": "left/right",
+            "valid": false
+        }]
+    },
+    {
+        "question": "Which value of the animation-fill-mode property, keeps the animation changes after completion ?",
+        "answers": [{
+            "answer": "forwards",
+            "valid": true
+        }, {
+            "answer": "backwards",
+            "valid": false
+        }, {
+            "answer": "both",
+            "valid": false
+        }, {
+            "answer": "none",
+            "valid": false
+        }]
+    },
+    {
+        "question": "If we have on :root font-size :16px, and element with font-size: 2rem, width: 20em, what is the value of width in pixels  ?",
+        "answers": [{
+            "answer": "200px",
+            "valid": false
+        }, {
+            "answer": "320px",
+            "valid": false
+        }, {
+            "answer": "400px",
+            "valid": false
+        }, {
+            "answer": "640px",
+            "valid": true
+        }]
+    },
+    {
+        "question": "If we have screen with width 320px, and the equation for the font-size  is calc(0.5rem + 2.5vmin), what will be the real value in pixels ?",
+        "answers": [{
+            "answer": "15px",
+            "valid": false
+        }, {
+            "answer": "12px",
+            "valid": false
+        }, {
+            "answer": "14px",
+            "valid": false
+        }, {
+            "answer": "16px",
+            "valid": true
+        }]
+    },
+        {
+        "question": "What it is the other way except @keyframes to animate stuff in css ?",
+        "answers": [{
+            "answer": "With transition property",
+            "valid": true
+        }, {
+            "answer": "With animation property",
+            "valid": false
+        }, {
+            "answer": "In css properties can be animated only with @keyframes",
+            "valid": false
+        }, {
+            "answer": "With transform property",
+            "valid": false
+        }]
+    }
+    ]
+}

@@ -2,26 +2,28 @@
 //styles for all btns
 .btn {
     display: block;
-    padding: 0.465em;
+    padding:  0.165em 0.935em;
     border-radius: 0.365em;
     font-size: 1.5em;
-    font-weight: bold; 
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer; 
 }
 .btn__next {
     position: absolute;
-    right: 14.1%;
-    top: 105%;
+    right: 0%;
+    top: 110%;
     border: 1px solid $mainGreen;
     border-radius: 0;
     color: $mainGreen;
-
-    @include tablet {
-        right: 11.3%;
+    
+    @include tablet  {
+        top: 107%;
     }
 }
 .btn__select-category {
     width: 7.5em;
-    margin:0 1.5em;
+    margin:0 auto;
     margin-bottom: 0.8em;
     background-color: $mainGreen;
     color: $bgColor;

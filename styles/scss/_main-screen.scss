@@ -11,15 +11,16 @@
     font-size: 4rem;
 }
 .main-screen__rules {
-    width: 25em;
     height: auto;
     margin: 0 auto;
     padding: 1.5em;
     font-weight: bold;
     color: white;
 }
+
+//styles for  choose category window
 .main-screen__categories {
-    width: calc(30% + 20em);
+    width: calc(30% + 14em);
     height: auto;
     margin: 0 auto;
     box-sizing: border-box;
@@ -27,29 +28,6 @@
     padding: 1em;
     color: white;
     text-align: center;
-}
-
-.main-screen__categories--hide-js {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 0;  
-    animation: hideSelectCategory;
-    animation-timing-function: all ease;
-    animation-duration: 0.4s;
-    animation-fill-mode: forwards;
-    transform-origin: center;
-}
-
-@keyframes hideSelectCategory {
-    0% {
-        opacity: 1;
-        transform: translateX(-50%);                
-    }
-    100% {
-        opacity: 0;
-        transform: translateX(-150%);       
-    }
 }
 
 .main-screen__categories__title {

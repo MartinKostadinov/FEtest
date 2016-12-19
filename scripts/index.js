@@ -1,7 +1,3 @@
-// to Do
-//x/ on category click, maked  get request and load the JSON with promise,
-//x return the  data, then load the  dom TemplateStringsArray
-//x looop the json and put first question, and its answers
 
 //get request for the API
 var getQuestionsData = (function() {
@@ -11,7 +7,7 @@ var getQuestionsData = (function() {
             xhr.onreadystatechange = getRequest;
             xhr.open('GET', url, true);
             xhr.onerror = function(e) {
-                console.log.error(xhr.statusText);
+                alert(xhr.statusText);
             };
             xhr.send(null);
 
@@ -19,9 +15,8 @@ var getQuestionsData = (function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     if (xhr.responseText === 'Not found') {
                         reject(Error('broke'));
-                        console.error(xhr.statusText);
+                        alert(xhr.statusText);
                     } else {
-                        //console.log(xhr.responseText);
                         var response = JSON.parse(xhr.responseText);
                         resolve(response);
                     }
@@ -45,7 +40,7 @@ var injectQuestions = (function() {
         questionDOM = document.querySelector('.questions__question'),
         answersDOM = document.querySelectorAll('.questions__answers'),
         btnNext = document.querySelector('.btn__next'),
-        questionSection = document.querySelector('.questions-container--hidden-js'),
+        questionSection = document.querySelector('.questions-container'),
         questionTitle = document.querySelector('.questions__title'),
         scoreSection = document.querySelector('.score-section'),
         totalQuestions = document.querySelector('.score-section__score__total'),
@@ -57,7 +52,7 @@ var injectQuestions = (function() {
         correctCounter = 0,
         answersJSON,
         question;
-    console.log(question);
+
     //event Listeners
     categoriesUl.addEventListener('click', loadQuestion, false);
     btnNext.addEventListener('click', nextQuestion, false);
@@ -77,14 +72,22 @@ var injectQuestions = (function() {
         categoryTitle = target.textContent;
         url = 'api/' + categoryTitle + '.json';
 
+        //check if contains .show-from-right class
+        if (categoriesContainer.classList.contains('show-from-right-js')){
+                    categoriesContainer.classList.remove('show-from-right-js');
+                    categoriesContainer.classList.add('hide-to-left-js');
+        } else {
+             categoriesContainer.classList.add('hide-to-left-js');
+        }
         //check if question continter is hidden
-        if (questionSection.classList.contains('questions-container--hidden-js')) {
-            questionSection.classList.remove('questions-container--hidden-js');
-            questionSection.classList.add('questions-container--visible-js');
+        if (questionSection.classList.contains('hide-to-left-js') || questionSection.classList.contains('hidden-js')) {
+            questionSection.classList.remove('hide-to-left-js');
+            questionSection.classList.remove('hidden-js');
+            questionSection.classList.add('show-from-right-js');
         }
 
         questionTitle.textContent = categoryTitle;
-        categoriesContainer.classList.add('main-screen__categories--hide-js');
+
 
         getQuestionsData.getData(url)
             .then(function(data) {
@@ -120,10 +123,12 @@ var injectQuestions = (function() {
 
         }, this);
     }
-
+    //show next question on click
     function nextQuestion(e) {
         e.preventDefault();
         count += 1;
+
+        //if its the final question show final score
         if (count >= question.length) {
             showEndScore();
             return;
@@ -150,11 +155,15 @@ var injectQuestions = (function() {
     //show the final score after completion of the test
     function showEndScore() {
         //hide question bar
-        questionSection.classList.add('.hide-to-left-js');
-        questionSection.classList.add('questions-container--hidden-js');
+        questionSection.classList.add('hide-to-left-js');
+         questionSection.classList.remove('show-from-right-js');
 
         //show Final score panel
         scoreSection.classList.remove('hidden-js');
+        scoreSection.classList.remove('hide-to-left-js');
+        scoreSection.classList.add('show-from-right-js');
+
+
         finalScore.textContent = correctCounter;
         finalScoreCategory.textContent = categoryTitle;
         totalQuestions.textContent = question.length;
@@ -210,15 +219,18 @@ var injectQuestions = (function() {
         e.preventDefault();
         //hide score screen
         scoreSection.classList.add('hide-to-left-js');
-        scoreSection.classList.add('hidden-js');
+        scoreSection.classList.remove('show-from-right-js');
+
+       // scoreSection.classList.add('hide-to-left-js');
 
         //show Main screen
-        categoriesContainer.classList.remove('main-screen__categories--hide-js');
+        categoriesContainer.classList.remove('hide-to-left-js');
+        categoriesContainer.classList.add('show-from-right-js');
         question = undefined;
         count = 0;
         correctCounter = 0;
         answersDOM.textContent = '';
         checkIfHighlighted();
-        scoreSection.classList.remove('hide-to-left-js');
+        // scoreSection.classList.remove('hide-to-left-js');
     }
 })();
