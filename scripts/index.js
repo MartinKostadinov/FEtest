@@ -156,6 +156,7 @@ var injectQuestions = (function() {
     function showEndScore() {
         //hide question bar
         questionSection.classList.add('hide-to-left-js');
+        questionSection.classList.add('hidden-js');
          questionSection.classList.remove('show-from-right-js');
 
         //show Final score panel
@@ -219,9 +220,8 @@ var injectQuestions = (function() {
         e.preventDefault();
         //hide score screen
         scoreSection.classList.add('hide-to-left-js');
+        scoreSection.classList.add('hidden-js');
         scoreSection.classList.remove('show-from-right-js');
-
-       // scoreSection.classList.add('hide-to-left-js');
 
         //show Main screen
         categoriesContainer.classList.remove('hide-to-left-js');
