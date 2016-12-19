@@ -20,6 +20,10 @@
     @include tablet  {
         top: 107%;
     }
+
+    &:hover {
+        color: white;
+    }
 }
 .btn__select-category {
     width: 7.5em;
@@ -27,6 +31,12 @@
     margin-bottom: 0.8em;
     background-color: $mainGreen;
     color: $bgColor;
+    transition: all ease 0.4s;
+
+    &:hover {
+        background-color: $darkGreen;
+        color: white;
+    }
 }
 .btn__next--hidden-js {
     display: none;
@@ -38,5 +48,9 @@
     border: 1px solid $mainGreen;
     border-radius: 0;
     color: $mainGreen;
+
+    &:hover {
+        color: white;
+    }
 }
  
