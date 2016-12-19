@@ -346,7 +346,8 @@ main {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
       -ms-flex: 1;
-          flex: 1; }
+          flex: 1;
+  margin-bottom: 4em; }
 
 footer {
   width: 100%;
