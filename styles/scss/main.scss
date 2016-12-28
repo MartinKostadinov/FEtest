@@ -11,9 +11,9 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
     height: 100%;
-     
+
      @include  tablet {
-          font-size: 14px;  
+          font-size: 14px;
      }
 }
 ul {
@@ -28,7 +28,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
-    background:rgb(28, 29, 35);//linear-gradient(97deg, #ff2300, #4aeabe);
+    background:$bgColor;
 }
 header {
     background-color: $mainGreen;
@@ -48,7 +48,7 @@ footer {
     font-size: 1.8rem;
     background-color: $mainGreen;
     text-align: center;
-    
+
     &:hover::before {
       content: '';
       position: absolute;
@@ -95,13 +95,13 @@ footer {
 @keyframes hideToLeft {
     0% {
         opacity: 1;
-        transform: translateX(-50%);                
+        transform: translateX(-50%);
     }
     100% {
         opacity: 0;
 
-        transform: translateX(-150%); 
-                visibility: hidden;      
+        transform: translateX(-150%);
+                visibility: hidden;
     }
 }
 
@@ -115,7 +115,7 @@ footer {
 @keyframes showQuestions {
     0% {
         opacity: 0;
-       left: 150%; 
+       left: 150%;
     }
     100% {
         opacity: 1;
@@ -132,4 +132,3 @@ footer {
     transform: translateY(-50%);
     cursor: pointer;
 }
-
