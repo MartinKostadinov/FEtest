@@ -1,236 +1,251 @@
+(function() {
+    document.addEventListener('DOMContentLoaded', function(){
+    //get request for the API
+    var getQuestionsData = (function() {
+        function getData(url) {
+            var getDataPromise = new Promise(function(resolve, reject) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = getRequest;
+                xhr.open('GET', url, true);
+                xhr.onerror = function(e) {
+                    alert(xhr.statusText);
+                };
+                xhr.send(null);
 
-//get request for the API
-var getQuestionsData = (function() {
-    function getData(url) {
-        var getDataPromise = new Promise(function(resolve, reject) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = getRequest;
-            xhr.open('GET', url, true);
-            xhr.onerror = function(e) {
-                alert(xhr.statusText);
-            };
-            xhr.send(null);
-
-            function getRequest(e) {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    if (xhr.responseText === 'Not found') {
-                        reject(Error('broke'));
-                        alert(xhr.statusText);
-                    } else {
-                        var response = JSON.parse(xhr.responseText);
-                        resolve(response);
+                function getRequest(e) {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        if (xhr.responseText === 'Not found') {
+                            reject(Error('broke'));
+                            alert(xhr.statusText);
+                        } else {
+                            var response = JSON.parse(xhr.responseText);
+                            resolve(response);
+                        }
                     }
+                };
+            });
+
+            return getDataPromise;
+        }
+
+        return {
+            getData: getData
+        }
+    })();
+    //function for chaining dom Classes add, remove, toggle
+    var chainCl = (function() {
+        function chainCl(e) {
+            var elClass = e.classList
+            return {
+                add: function(x) {
+                    elClass.add(x);
+                    return this;
+                },
+                remove: function(x) {
+                    elClass.remove(x);
+                    return this;
+                },
+                toggle: function(x) {
+                    elClass.toggle(x);
+                    return this;
                 }
-            };
-        });
-
-        return getDataPromise;
-    }
-
-    return {
-        getData: getData
-    }
-})();
-
-var injectQuestions = (function() {
-    //cache DOM
-    var categoriesContainer = document.querySelector('.main-screen__categories'),
-        categoriesUl = document.querySelector('.main-screen__categories-container'),
-        questionsArticle = document.querySelector('.questions'),
-        questionDOM = document.querySelector('.questions__question'),
-        answersDOM = document.querySelectorAll('.questions__answers'),
-        btnNext = document.querySelector('.btn__next'),
-        questionSection = document.querySelector('.questions-container'),
-        questionTitle = document.querySelector('.questions__title'),
-        scoreSection = document.querySelector('.score-section'),
-        totalQuestions = document.querySelector('.score-section__score__total'),
-        finalScore = document.querySelector('.score-section__score__val'),
-        finalScoreCategory = document.querySelector('.score-section__category'),
-        btnBackHome = document.querySelector('.btn__back-home'),
-        categoryTitle,
-        count = 0,
-        correctCounter = 0,
-        answersJSON,
-        question;
-
-    //event Listeners
-    categoriesUl.addEventListener('click', loadQuestion, false);
-    btnNext.addEventListener('click', nextQuestion, false);
-    questionsArticle.addEventListener('click', checkAnswer, false);
-    btnBackHome.addEventListener('click', backToHome, false);
-
-    //functions
-    //load questions from JSON file
-    function loadQuestion(e) {
-        e.preventDefault();
-        var target = e.target,
-            url;
-        if (!target.classList.contains('btn__select-category')) {
-            return;
+            }
         }
-        //get the url for the JSON file
-        categoryTitle = target.textContent;
-        url = 'api/' + categoryTitle + '.json';
+        return chainCl
+    })();
+    var injectQuestions = (function() {
+        //cache DOM
+        var categoriesContainer = document.querySelector('.main-screen__categories'),
+            questionSection = document.querySelector('.questions-container'),
+            questionsArticle = questionSection.querySelector('.questions'),
+            answersDOM = questionsArticle.querySelectorAll('.questions__answers'),
+            btnNext = questionsArticle.querySelector('.btn__next'),
+            scoreSection = document.querySelector('.score-section'),            
+            btnBackHome = scoreSection.querySelector('.btn__back-home'),
+            count = 0,
+            correctCounter = 0,
+            categoryTitle,
+            answersJSON,
+            question;
 
-        //check if contains .show-from-right class
-        if (categoriesContainer.classList.contains('show-from-right-js')){
-                    categoriesContainer.classList.remove('show-from-right-js');
-                    categoriesContainer.classList.add('hide-to-left-js');
-        } else {
-             categoriesContainer.classList.add('hide-to-left-js');
-        }
-        //check if question continter is hidden
-        if (questionSection.classList.contains('hide-to-left-js') || questionSection.classList.contains('hidden-js')) {
-            questionSection.classList.remove('hide-to-left-js');
-            questionSection.classList.remove('hidden-js');
-            questionSection.classList.add('show-from-right-js');
-        }
+        //event Listeners        
+        categoriesContainer.addEventListener('click', loadQuestion, false);
+        btnNext.addEventListener('click', nextQuestion, false);
+        questionsArticle.addEventListener('click', checkAnswer, false);
+        btnBackHome.addEventListener('click', backToHome, false);
 
-        questionTitle.textContent = categoryTitle;
-
-
-        getQuestionsData.getData(url)
-            .then(function(data) {
-                question = data.nature.slice();
-                return question;
-            }).then(showQuestion);
-
-    }
-
-    function showQuestion() {
-        question.forEach(function(element, index) {
-            var questionData = element.question,
-                answersData = element.answers;
-            if (index !== count) {
+        //functions
+        //load questions from JSON file
+        function loadQuestion(e) {
+            e.preventDefault();
+            var target = e.target,
+                questionTitle = questionSection.querySelector('.questions__title'),
+                checkIsHidden, url;
+            if (!target.classList.contains('btn__select-category')) {
                 return;
             }
+            //get the url for the JSON file
+            categoryTitle = target.textContent;
+            questionTitle.textContent = categoryTitle;
+            url = 'api/' + categoryTitle + '.json';
 
-            //append  the JSON data to the HTML;
-            questionDOM.textContent = questionData;
-            answersJSON = answersData;
-            //append answers to listItems;
-            answersData.forEach(function(element, index) {
-                if (answersData.length === answersDOM.length) {
-                    answersDOM[index].textContent = element.answer;
+            //check if contains .show-from-right class
+            checkIsHidden = (function() {
+                if (categoriesContainer.classList.contains('show-from-right-js')) {
+                    chainCl(categoriesContainer).remove('show-from-right-js')
+                        .add('hide-to-left-js');
 
+                } else {
+                    categoriesContainer.classList.add('hide-to-left-js');
+                }
+                //check if question continter is hidden
+                if (questionSection.classList.contains('hide-to-left-js') || questionSection.classList.contains('hidden-js')) {
+                    chainCl(questionSection).remove('hide-to-left-js')
+                        .remove('hidden-js')
+                        .add('show-from-right-js');
+                }
+            })();
+
+            getQuestionsData.getData(url)
+                .then(function(data) {
+                    question = data.questions.slice();
+                    return question;
+                }).then(showQuestion);
+
+        }
+        //load  data
+        function showQuestion() {
+            var questionDOM = questionsArticle.querySelector('.questions__question');
+            //set question counter values
+            question.forEach(function(element, index) {
+                var totalCount = questionsArticle.querySelector('.questions__total-count'),
+                    curCount = questionsArticle.querySelector('.questions__current-count'),
+                    questionData = element.question;
+                if (index !== count) {
+                    return;
+                }
+
+                //append  the question data to the HTML;
+                questionDOM.textContent = questionData;
+                answersJSON = element.answers;
+                //append answers to HTML listItems;
+                answersJSON.forEach(function(element, index) {
+                    if (answersJSON.length === answersDOM.length) {
+                        answersDOM[index].textContent = element.answer;
+                    }
+                });
+                //add total count of questions to the counter
+                totalCount.textContent = question.length;
+                curCount.textContent = index + 1;
+                return;
+            });
+        }
+        //show next question on click
+        function nextQuestion(e) {
+            e.preventDefault();
+            var finalScoreCategory = scoreSection.querySelector('.score-section__category'),
+                totalQuestions = scoreSection.querySelector('.score-section__score__total'),
+                finalScore = scoreSection.querySelector('.score-section__score__val');
+         //if its the final question show final score
+            if (count >= question.length-1) {
+                showEndScore();
+                return;
+            }
+               function showEndScore () {
+                //hide question bar
+                chainCl(questionSection).add('hide-to-left-js')
+                    .add('hidden-js')
+                    .remove('show-from-right-js');
+                //show Final score panel
+                chainCl(scoreSection).remove('hidden-js')
+                    .remove('hide-to-left-js')
+                    .add('show-from-right-js');
+                finalScore.textContent = correctCounter;
+                finalScoreCategory.textContent = categoryTitle;
+                totalQuestions.textContent = question.length;
+            }
+
+            count += 1;
+            showQuestion();
+            checkIfHighlighted();
+            this.classList.add('btn__next--hidden-js');
+
+        }
+
+        //clear  previously selected Answers
+        function checkIfHighlighted() {
+            answersDOM.forEach(function(element) {
+                if (element.classList.contains('questions__answers--wrong-js')) {
+                    element.classList.remove('questions__answers--wrong-js');
+                }
+
+                if (element.classList.contains('questions__answers--correct-js')) {
+                    element.classList.remove('questions__answers--correct-js');
+                }
+            });
+        }
+
+
+        //check if answer is correct
+        function checkAnswer(e) {
+            var target = e.target,
+                selectedAnswer;
+            if (target.className !== 'questions__answers') {
+                return;
+            }
+            // check if element contains class wrong or correct
+            answersDOM.forEach(function(element) {
+                if (element.classList.contains('questions__answers--correct-js') || element.classList.contains('questions__answers--wrong-js')) {
+                    return;
+                }
+             });
+
+            selectedAnswer = target.textContent;
+            answersJSON.forEach(function(element) {
+                var answersData = element.answer,
+                    answerState = element.valid,
+                    answerCorrect, checkCorrect;
+
+                //store the value of the correct answer
+                if (answerState === true) {
+                    answerCorrect = answersData;
+                    checkCorrect = [].slice.call(answersDOM)
+                        .filter(function(el){
+                            return el.textContent === answerCorrect;
+                        });
+                    checkCorrect[0].classList.add('questions__answers--correct-js');
+                }
+                //check if the answer is the correct
+                if (selectedAnswer === answersData) {
+                    if (answerState === true) {
+                        target.classList.add('questions__answers--correct-js');
+                        correctCounter += 1;
+                    } else {
+                        target.classList.add('questions__answers--wrong-js');
+                    }
+                    btnNext.classList.remove('btn__next--hidden-js');
                 }
             });
 
-            //add total count of questions to the counter
-            document.querySelector('.questions__total-count').textContent = question.length;
-            document.querySelector('.questions__current-count').textContent = index + 1;
-            return;
-
-        }, this);
-    }
-    //show next question on click
-    function nextQuestion(e) {
-        e.preventDefault();
-        count += 1;
-
-        //if its the final question show final score
-        if (count >= question.length) {
-            showEndScore();
-            return;
         }
-        showQuestion();
-        checkIfHighlighted();
 
-        this.classList.add('btn__next--hidden-js');
-
-    }
-
-    //clear  previously selected Answers
-    function checkIfHighlighted() {
-        answersDOM.forEach(function(element, index) {
-            if (element.classList.contains('questions__answers--wrong-js')) {
-                element.classList.remove('questions__answers--wrong-js');
-            }
-
-            if (element.classList.contains('questions__answers--correct-js')) {
-                element.classList.remove('questions__answers--correct-js');
-            }
-        });
-    }
-    //show the final score after completion of the test
-    function showEndScore() {
-        //hide question bar
-        questionSection.classList.add('hide-to-left-js');
-        questionSection.classList.add('hidden-js');
-         questionSection.classList.remove('show-from-right-js');
-
-        //show Final score panel
-        scoreSection.classList.remove('hidden-js');
-        scoreSection.classList.remove('hide-to-left-js');
-        scoreSection.classList.add('show-from-right-js');
-
-
-        finalScore.textContent = correctCounter;
-        finalScoreCategory.textContent = categoryTitle;
-        totalQuestions.textContent = question.length;
-    }
-
-    //check if answer is correct
-    function checkAnswer(e) {
-        var target = e.target,
-            selectedAnswer;
-        if (target.className !== 'questions__answers') {
-            return;
+        //Function to go back to home page when test is finished
+        function backToHome(e) {
+            e.preventDefault();
+            //hide score screen
+            chainCl(scoreSection).add('hide-to-left-js')
+                .add('hidden-js')
+                    .remove('show-from-right-js');
+            //show Main screen
+           chainCl(categoriesContainer).remove('hide-to-left-js')
+                .add('show-from-right-js');
+            question = undefined;
+            count = 0;
+            correctCounter = 0;
+            answersDOM.textContent = '';
+            checkIfHighlighted();
+            btnNext.classList.add('btn__next--hidden-js');
         }
-        // check if element contains class wrong or correct
-        for (var element of answersDOM) {
-            if (element.classList.contains('questions__answers--correct-js') || element.classList.contains('questions__answers--wrong-js')) {
-                return;
-            }
-
-        };
-
-        selectedAnswer = target.textContent;
-        answersJSON.forEach(function(element) {
-            var answersData = element.answer,
-                answerState = element.valid,
-                answerCorrect;
-
-            //store the value of the correct answer
-            if (element.valid === true) {
-                answerCorrect = element.answer;
-
-                for (var element of answersDOM) {
-                    if (element.textContent === answerCorrect) {
-                        element.classList.add('questions__answers--correct-js');
-                    }
-                }
-            }
-            //check if the answer is the correct
-            if (selectedAnswer === answersData) {
-                if (answerState === true) {
-                    target.classList.add('questions__answers--correct-js');
-                    correctCounter += 1;
-                } else {
-                    target.classList.add('questions__answers--wrong-js');
-                }
-                btnNext.classList.remove('btn__next--hidden-js');
-            }
-        });
-
-    }
-
-    //Function to go back to home page when test is finished
-    function backToHome(e) {
-        e.preventDefault();
-        //hide score screen
-        scoreSection.classList.add('hide-to-left-js');
-        scoreSection.classList.add('hidden-js');
-        scoreSection.classList.remove('show-from-right-js');
-
-        //show Main screen
-        categoriesContainer.classList.remove('hide-to-left-js');
-        categoriesContainer.classList.add('show-from-right-js');
-        question = undefined;
-        count = 0;
-        correctCounter = 0;
-        answersDOM.textContent = '';
-        checkIfHighlighted();
-        // scoreSection.classList.remove('hide-to-left-js');
-    }
+        })();
+    });
 })();

@@ -1,5 +1,5 @@
 {
-    "nature": [{
+    "questions": [{
         "question": "What does it mean <!DOCTYPE html> at the start of the HTML file ?",
         "answers": [{
             "answer": "File is written in  XHTML 1.1 version ",
