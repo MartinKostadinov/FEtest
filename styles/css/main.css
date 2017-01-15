@@ -111,7 +111,7 @@ h1, h2, h3, h4 {
           transform-style: preserve-3d; }
   @media screen and (max-width: 840px) {
     .questions {
-      width: 80%; } }
+      width: 75%; } }
   @media screen and (min-width: 560px) and (max-width: 840px) and (orientation: landscape) {
     .questions {
       width: 93%;
@@ -248,8 +248,8 @@ h1, h2, h3, h4 {
   color: #32fa64; }
   @media screen and (max-width: 840px) {
     .btn__next {
-      top: -webkit-calc(100% + 1.8rem);
-      top: calc(100% + 1.8rem); } }
+      top: -webkit-calc(100% + 1.8em);
+      top: calc(100% + 1.8em); } }
   .btn__next:hover {
     color: white; }
 
@@ -366,7 +366,7 @@ body {
           flex-direction: column;
   width: 100%;
   background-color: #1c1c25;
-  overflow-x: hidden; }
+  overflow: hidden; }
 
 header {
   background-color: #32fa64;
@@ -374,7 +374,6 @@ header {
   padding: 0.265em; }
 
 main {
-  height: 90vh;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
       -ms-flex: 1;
