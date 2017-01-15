@@ -1,9 +1,15 @@
+@import '_mixins.scss';
 .main-screen {
     width: 100%;
     height: auto;
+    margin-top: 1.5em;
     text-align: center;
     position: relative;
     perspective: 1000px;
+    
+    @include landscape {
+        margin-top: 0.5em;
+    }
 }
 .main-screen__title {
     width: 100%;
@@ -11,6 +17,10 @@
     font-size: 3rem;
     font-weight: 900;
     text-transform: uppercase;
+         
+     @include tablet {
+      font-size: 1.5rem;   
+     }
 }
 .main-screen__rules {
     height: auto;

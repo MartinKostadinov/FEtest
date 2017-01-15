@@ -4,7 +4,7 @@
 @import '_main-screen.scss';
 @import '_questions.scss';
 @import '_btns.scss';
-@import '_counter.scss';
+@import '_score-screen.scss';
 @import '_mixins.scss';
 
 :root{
@@ -14,6 +14,9 @@
 
      @include  tablet {
           font-size: 14px;
+     }
+     @include landscape {
+         font-size: 13px;
      }
 }
 ul {
@@ -28,7 +31,8 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
-    background:$bgColor;
+    background-color:$bgColor;
+    overflow: hidden;
 }
 header {
     background-color: $mainGreen;
@@ -40,6 +44,10 @@ main {
     flex: 1;
     margin-bottom: 4em;
     overflow: hidden;
+
+    @include landscape {
+        height: 90vh;
+    }
 }
 
 footer {
@@ -73,6 +81,7 @@ footer {
 
     @include tablet  {
         font-size: 1.3rem;
+        height: 4.25rem;
     }
 }
 //common classes
@@ -82,46 +91,41 @@ footer {
 
 .hide-to-left-js {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 0;
+    left: 25%;
     animation: hideToLeft;
     animation-timing-function: all ease;
-    animation-duration: 0.4s;
+    animation-duration: 0.9s;
     animation-fill-mode: forwards;
-    transform-origin: center;
-
 }
 
 @keyframes hideToLeft {
     0% {
         opacity: 1;
-        transform: translateX(-50%);
     }
     100% {
         opacity: 0;
 
-        transform: translateX(-150%);
-                visibility: hidden;
+        left: -150%;;
     }
 }
 
 .show-from-right-js {
-    position: relative;
+    position: absolute;
     animation: showQuestions;
-    animation-duration: 0.4s;
+    animation-duration: 0.9s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
+    right: 0%;
 }
 @keyframes showQuestions {
     0% {
-        opacity: 0;
+       opacity: 0;
        left: 150%;
     }
     100% {
         opacity: 1;
-        left: 0;
-        visibility: visible;
+        left: 0%;
+        right: 0%;
     }
 }
 

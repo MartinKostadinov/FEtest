@@ -58,12 +58,12 @@
         var categoriesContainer = document.querySelector('.main-screen__categories'),
             questionSection = document.querySelector('.questions-container'),
             questionsArticle = questionSection.querySelector('.questions'),
-            answersDOM = questionsArticle.querySelectorAll('.questions__answers'),
+            answersDOM = [].slice.call(questionsArticle.querySelectorAll('.questions__answers')),
             btnNext = questionsArticle.querySelector('.btn__next'),
             scoreSection = document.querySelector('.score-section'),            
             btnBackHome = scoreSection.querySelector('.btn__back-home'),
             count = 0,
-            correctCounter = 0,
+            correctCounter = 0,  
             categoryTitle,
             answersJSON,
             question;
@@ -104,7 +104,7 @@
                         .remove('hidden-js')
                         .add('show-from-right-js');
                 }
-            })();
+            }());
 
             getQuestionsData.getData(url)
                 .then(function(data) {
@@ -115,10 +115,11 @@
         }
         //load  data
         function showQuestion() {
-            var questionDOM = questionsArticle.querySelector('.questions__question');
+            var questionDOM = questionsArticle.querySelector('.questions__question'),
+                loopQuestions;
             //set question counter values
-            question.forEach(function(element, index) {
-                var totalCount = questionsArticle.querySelector('.questions__total-count'),
+            loopQuestions =  question.forEach(function(element, index) {
+              var totalCount = questionsArticle.querySelector('.questions__total-count'),
                     curCount = questionsArticle.querySelector('.questions__current-count'),
                     questionData = element.question;
                 if (index !== count) {
@@ -154,7 +155,6 @@
                function showEndScore () {
                 //hide question bar
                 chainCl(questionSection).add('hide-to-left-js')
-                    .add('hidden-js')
                     .remove('show-from-right-js');
                 //show Final score panel
                 chainCl(scoreSection).remove('hidden-js')
@@ -189,16 +189,22 @@
         //check if answer is correct
         function checkAnswer(e) {
             var target = e.target,
+                checkCorrectOrWrong,
                 selectedAnswer;
             if (target.className !== 'questions__answers') {
                 return;
             }
-            // check if element contains class wrong or correct
-            answersDOM.forEach(function(element) {
-                if (element.classList.contains('questions__answers--correct-js') || element.classList.contains('questions__answers--wrong-js')) {
-                    return;
-                }
-             });
+           
+            checkCorrectOrWrong = answersDOM.every(function(element) {                    
+                return  element.classList.contains('questions__answers--correct-js') 
+                         || element.classList.contains('questions__answers--wrong-js') ? false : true;
+                
+            });
+             // check if element contains class wrong or correct
+            if(checkCorrectOrWrong == false){
+                return;
+            }
+          
 
             selectedAnswer = target.textContent;
             answersJSON.forEach(function(element) {
@@ -209,8 +215,7 @@
                 //store the value of the correct answer
                 if (answerState === true) {
                     answerCorrect = answersData;
-                    checkCorrect = [].slice.call(answersDOM)
-                        .filter(function(el){
+                     checkCorrect = answersDOM.filter(function(el){
                             return el.textContent === answerCorrect;
                         });
                     checkCorrect[0].classList.add('questions__answers--correct-js');
@@ -234,11 +239,13 @@
             e.preventDefault();
             //hide score screen
             chainCl(scoreSection).add('hide-to-left-js')
-                .add('hidden-js')
                     .remove('show-from-right-js');
+                      
             //show Main screen
            chainCl(categoriesContainer).remove('hide-to-left-js')
                 .add('show-from-right-js');
+            
+        //clear everything
             question = undefined;
             count = 0;
             correctCounter = 0;

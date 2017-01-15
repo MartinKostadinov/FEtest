@@ -1,7 +1,14 @@
 $tablet-width: 840px;
+$landscape : 560px;
 
 @mixin tablet {
     @media screen and (max-width: #{$tablet-width}){
+        @content;
+    }
+}
+
+@mixin landscape {
+    @media  screen and  (min-width: #{$landscape}) and (max-width: #{$tablet-width}) and (orientation: landscape){
         @content;
     }
 }
