@@ -18,7 +18,7 @@
     color: $mainGreen;
     
     @include tablet  {
-            top: calc(100% + 1.8em);
+            top: calc(100% + 1.8rem);
     }
 
     &:hover {

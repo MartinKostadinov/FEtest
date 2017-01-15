@@ -32,7 +32,7 @@ body {
     flex-direction: column;
     width: 100%;
     background-color:$bgColor;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 header {
     background-color: $mainGreen;
@@ -44,8 +44,7 @@ main {
     flex: 1;
     margin-bottom: 4em;
     overflow: hidden;
-
-    @include landscape {
+    @include tablet {
         height: 90vh;
     }
 }
