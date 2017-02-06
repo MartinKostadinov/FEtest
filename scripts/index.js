@@ -1,7 +1,6 @@
 (function() {
-    document.addEventListener('DOMContentLoaded', function(){
     //get request for the API
-    var getQuestionsData = (function() {
+    var getTestData = (function() {
         function getData(url) {
             var getDataPromise = new Promise(function(resolve, reject) {
                 var xhr = new XMLHttpRequest();
@@ -15,14 +14,14 @@
                 function getRequest(e) {
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         if (xhr.responseText === 'Not found') {
-                            reject(Error('broke'));
+                            reject(Error('Not Found, contanct admin'));
                             alert(xhr.statusText);
                         } else {
                             var response = JSON.parse(xhr.responseText);
                             resolve(response);
                         }
                     }
-                };
+                }
             });
 
             return getDataPromise;
@@ -30,12 +29,12 @@
 
         return {
             getData: getData
-        }
-    })();
-    //function for chaining dom Classes add, remove, toggle
+        };
+    }());
+    //function for chaining dom Classes - add, remove, toggle
     var chainCl = (function() {
         function chainCl(e) {
-            var elClass = e.classList
+            var elClass = e.classList;
             return {
                 add: function(x) {
                     elClass.add(x);
@@ -49,210 +48,249 @@
                     elClass.toggle(x);
                     return this;
                 }
-            }
+            };
         }
-        return chainCl
-    })();
+        return chainCl;
+    }());
+
     var injectQuestions = (function() {
         //cache DOM
-        var categoriesContainer = document.querySelector('.main-screen__categories'),
-            questionSection = document.querySelector('.questions-container'),
-            questionsArticle = questionSection.querySelector('.questions'),
-            answersDOM = [].slice.call(questionsArticle.querySelectorAll('.questions__answers')),
-            btnNext = questionsArticle.querySelector('.btn__next'),
-            scoreSection = document.querySelector('.score-section'),            
-            btnBackHome = scoreSection.querySelector('.btn__back-home'),
-            count = 0,
-            correctCounter = 0,  
-            categoryTitle,
-            answersJSON,
-            question;
-
-        //event Listeners        
-        categoriesContainer.addEventListener('click', loadQuestion, false);
-        btnNext.addEventListener('click', nextQuestion, false);
-        questionsArticle.addEventListener('click', checkAnswer, false);
-        btnBackHome.addEventListener('click', backToHome, false);
+        var categoriesContainerElement = document.getElementById('categories-container');
+        var finalScoreSection = document.getElementById('final-score');
+        var btnBackHomeElement = finalScoreSection.querySelector('.btn__back-home');
+        var testContainerElement = document.getElementById('test-container');
+        var testHeadlineElement = testContainerElement.querySelector('.test__headline');
+        var testQuestionContainerElement = testContainerElement.querySelector('.question-container');
+        var testQuestionElement = testQuestionContainerElement.querySelector('.question');
+        var testAnswersListElement = [].slice.call(testQuestionContainerElement.querySelectorAll('.answer'));
+        var testNextButtonElement = testQuestionContainerElement.querySelector('.btn__next');
+        var count = 0;
+        var correctQuestionsCounter = 0;
+        var categoryTitle;
+        var getAnswersFromData;
+        var questions;
 
         //functions
-        //load questions from JSON file
+
+        //check container  if its hidden if not, hide it
+        function checkContainerForHiddenStatus(categoryCont, testCont) {
+            if (categoryCont.classList.contains('js-show-from-right')) {
+                chainCl(categoryCont).remove('js-show-from-right').add('js-hide-to-left');
+
+            } else {
+                categoryCont.classList.add('js-hide-to-left');
+            }
+            //check if test continter is hidden
+            if (testCont.classList.contains('js-hide-to-left') || testCont.classList.contains('js-hidden')) {
+                chainCl(testCont).remove('js-hide-to-left').remove('js-hidden').add('js-show-from-right');
+            }
+        }
+        //load questions
         function loadQuestion(e) {
             e.preventDefault();
-            var target = e.target,
-                questionTitle = questionSection.querySelector('.questions__title'),
-                checkIsHidden, url;
+            var target = e.target;
+            var categoryTitle;
+            var url;
+            //check if the button is the clicked element
             if (!target.classList.contains('btn__select-category')) {
                 return;
             }
-            //get the url for the JSON file
+            //create data url
             categoryTitle = target.textContent;
-            questionTitle.textContent = categoryTitle;
             url = 'api/' + categoryTitle + '.json';
 
-            //check if contains .show-from-right class
-            checkIsHidden = (function() {
-                if (categoriesContainer.classList.contains('show-from-right-js')) {
-                    chainCl(categoriesContainer).remove('show-from-right-js')
-                        .add('hide-to-left-js');
+            //load questions from JSON
+            getTestData.getData(url).then(function(data) {
+                questions = data.questions.slice();
+                return questions;
+            }).then(appendQustionDataToDom);
 
-                } else {
-                    categoriesContainer.classList.add('hide-to-left-js');
-                }
-                //check if question continter is hidden
-                if (questionSection.classList.contains('hide-to-left-js') || questionSection.classList.contains('hidden-js')) {
-                    chainCl(questionSection).remove('hide-to-left-js')
-                        .remove('hidden-js')
-                        .add('show-from-right-js');
-                }
-            }());
-
-            getQuestionsData.getData(url)
-                .then(function(data) {
-                    question = data.questions.slice();
-                    return question;
-                }).then(showQuestion);
-
+            //Hide Category container, show Test container, append test headline
+            checkContainerForHiddenStatus(categoriesContainerElement, testContainerElement);
+            testHeadlineElement.textContent = categoryTitle;
         }
-        //load  data
-        function showQuestion() {
-            var questionDOM = questionsArticle.querySelector('.questions__question'),
-                loopQuestions;
-            //set question counter values
-            loopQuestions =  question.forEach(function(element, index) {
-              var totalCount = questionsArticle.querySelector('.questions__total-count'),
-                    curCount = questionsArticle.querySelector('.questions__current-count'),
-                    questionData = element.question;
-                if (index !== count) {
-                    return;
-                }
+        //Recursion for looping over  questions
+        function iterateQuestions(start, end, array) {
+            var element = questions[start];
+            var getQuestionData = {};
+            var answersLength;
 
-                //append  the question data to the HTML;
-                questionDOM.textContent = questionData;
-                answersJSON = element.answers;
-                //append answers to HTML listItems;
-                answersJSON.forEach(function(element, index) {
-                    if (answersJSON.length === answersDOM.length) {
-                        answersDOM[index].textContent = element.answer;
-                    }
-                });
-                //add total count of questions to the counter
-                totalCount.textContent = question.length;
-                curCount.textContent = index + 1;
+            if (start !== count) {
+                return iterateQuestions(start + 1, end, array);
+            } else {
+                getQuestionData.question = element.question;
+                getQuestionData.answers = element.answers;
+                getQuestionData.increaseQuestionsCount = start + 1;
+                return getQuestionData;
+            }
+        }
+        //Recurssion for looping over Answers
+        function iterateAndApendAnswers(start, end, arrayOne, arrayTwo) {
+            var element = arrayOne[start];
+            if (start > end - 1) {
                 return;
-            });
+            }
+            if (end === arrayTwo.length) {
+                arrayTwo[start].textContent = element.answer;
+            }
+            return iterateAndApendAnswers(start + 1, end, arrayOne, arrayTwo);
         }
+        //Append data from JSON to DOM elements
+        function appendQustionDataToDom() {
+            var currentQuestionsCountElement = testQuestionContainerElement.querySelector('.question-count__current');
+            var totalQuestionsCountElement = testQuestionContainerElement.querySelector('.question-count__total');
+            var questionsLength = questions.length;
+            var answersLength;
+            var currentQuestion;
+            var loopQuestions;
+
+            currentQuestion = iterateQuestions(0, questionsLength, questions);
+            //append  the question data to the HTML;
+            testQuestionElement.textContent = currentQuestion.question;
+            getAnswersFromData = currentQuestion.answers;
+            //set counter  values
+            currentQuestionsCountElement.textContent = currentQuestion.increaseQuestionsCount;
+            totalQuestionsCountElement.textContent = questionsLength;
+            //loop answers and append them to the DOM elements
+            answersLength = getAnswersFromData.length;
+            iterateAndApendAnswers(0, answersLength, getAnswersFromData, testAnswersListElement);
+
+        }
+
         //show next question on click
         function nextQuestion(e) {
             e.preventDefault();
-            var finalScoreCategory = scoreSection.querySelector('.score-section__category'),
-                totalQuestions = scoreSection.querySelector('.score-section__score__total'),
-                finalScore = scoreSection.querySelector('.score-section__score__val');
-         //if its the final question show final score
-            if (count >= question.length-1) {
+            var answersElementLength = testAnswersListElement.length;
+            var target = e.target;
+            //if its the final question show final score
+            if (count >= questions.length - 1) {
                 showEndScore();
                 return;
             }
-               function showEndScore () {
-                //hide question bar
-                chainCl(questionSection).add('hide-to-left-js')
-                    .remove('show-from-right-js');
-                //show Final score panel
-                chainCl(scoreSection).remove('hidden-js')
-                    .remove('hide-to-left-js')
-                    .add('show-from-right-js');
-                finalScore.textContent = correctCounter;
-                finalScoreCategory.textContent = categoryTitle;
-                totalQuestions.textContent = question.length;
+            count += 1;
+            appendQustionDataToDom();
+            checkIfHighlighted(0, answersElementLength, testAnswersListElement);
+            target.classList.add('js-btn__next--hidden');
+
+        }
+        //remove  question section and  show  final score
+        function showEndScore() {
+            var finalScoreCategoryElement = finalScoreSection.querySelector('.score-section__category');
+            var finalScoreTotalElement = finalScoreSection.querySelector('.score-section__score__total');
+            var finalScoreValueElement = finalScoreSection.querySelector('.score-section__score__val');
+            //hide test
+            chainCl(testContainerElement).add('js-hide-to-left').remove('js-show-from-right');
+            //show Final score panel
+            chainCl(finalScoreSection).remove('js-hidden').remove('js-hide-to-left').add('js-show-from-right');
+            finalScoreValueElement.textContent = correctQuestionsCounter;
+            finalScoreCategoryElement.textContent = testHeadlineElement.textContent;
+            finalScoreTotalElement.textContent = questions.length;
+
+        }
+        //clear  previously selected Answers
+        function checkIfHighlighted(start, end, array) {
+            var element = array[start];
+
+            if (start >= end) {
+                return;
             }
 
-            count += 1;
-            showQuestion();
-            checkIfHighlighted();
-            this.classList.add('btn__next--hidden-js');
+            if (element.classList.contains('js-answer--wrong')) {
+                element.classList.remove('js-answer--wrong');
+            }
 
+            if (element.classList.contains('js-answer--correct')) {
+                element.classList.remove('js-answer--correct');
+            }
+
+            return checkIfHighlighted(start + 1, end, array);
         }
 
-        //clear  previously selected Answers
-        function checkIfHighlighted() {
-            answersDOM.forEach(function(element) {
-                if (element.classList.contains('questions__answers--wrong-js')) {
-                    element.classList.remove('questions__answers--wrong-js');
-                }
+        //store the value of the correct answer
+        function setCorrectAnswer(start, end, array) {
+            var element = array[start];
+            var getAnswer = element.answer;
+            var getAnswerState = element.valid;
+            var correctAnswerValue;
 
-                if (element.classList.contains('questions__answers--correct-js')) {
-                    element.classList.remove('questions__answers--correct-js');
-                }
-            });
+            //check for valid answer and  store it to the dom
+            if (getAnswerState === true) {
+                correctAnswerValue = getAnswer;
+                return {
+                    getAnswer: correctAnswerValue,
+                    getAnswerState: getAnswerState
+                };
+            }
+            return setCorrectAnswer(start + 1, end, array);
         }
-
 
         //check if answer is correct
         function checkAnswer(e) {
-            var target = e.target,
-                checkCorrectOrWrong,
-                selectedAnswer;
-            if (target.className !== 'questions__answers') {
+            var answersDataLength = getAnswersFromData.length;
+            var target = e.target;
+            var checkCorrectOrWrong;
+            var correctAnswer;
+            var getCorrectAnswer;
+            var selectedAnswer;
+            if (target.className !== 'answer') {
                 return;
             }
-           
-            checkCorrectOrWrong = answersDOM.every(function(element) {                    
-                return  element.classList.contains('questions__answers--correct-js') 
-                         || element.classList.contains('questions__answers--wrong-js') ? false : true;
-                
+
+            checkCorrectOrWrong = testAnswersListElement.every(function(element) {
+                return element.classList.contains('js-answer--correct') || element.classList.contains('js-answer--wrong') ? false : true;
+
             });
-             // check if element contains class wrong or correct
-            if(checkCorrectOrWrong == false){
+            // check if element contains class wrong or correct
+            if (checkCorrectOrWrong === false) {
                 return;
             }
-          
 
             selectedAnswer = target.textContent;
-            answersJSON.forEach(function(element) {
-                var answersData = element.answer,
-                    answerState = element.valid,
-                    answerCorrect, checkCorrect;
 
-                //store the value of the correct answer
-                if (answerState === true) {
-                    answerCorrect = answersData;
-                     checkCorrect = answersDOM.filter(function(el){
-                            return el.textContent === answerCorrect;
-                        });
-                    checkCorrect[0].classList.add('questions__answers--correct-js');
+            correctAnswer = setCorrectAnswer(0, answersDataLength, getAnswersFromData);
+            //check if the answer is the correct
+            if (selectedAnswer === correctAnswer.getAnswer) {
+                //if answer is  correct, add class correct and increast counter
+                if (correctAnswer.getAnswerState === true) {
+                    target.classList.add('js-answer--correct');
+                    correctQuestionsCounter += 1;
                 }
-                //check if the answer is the correct
-                if (selectedAnswer === answersData) {
-                    if (answerState === true) {
-                        target.classList.add('questions__answers--correct-js');
-                        correctCounter += 1;
-                    } else {
-                        target.classList.add('questions__answers--wrong-js');
-                    }
-                    btnNext.classList.remove('btn__next--hidden-js');
-                }
-            });
+            } else { //if answer is wrong  add class wrong, find correct answer and add class correct
+                target.classList.add('js-answer--wrong');
+                getCorrectAnswer = testAnswersListElement.filter(function(el) {
+                    return el.textContent === correctAnswer.getAnswer;
+                });
+                getCorrectAnswer[0].classList.add('js-answer--correct');
+            }
 
+            testNextButtonElement.classList.remove('js-btn__next--hidden');
         }
 
         //Function to go back to home page when test is finished
         function backToHome(e) {
             e.preventDefault();
+            var answersLength = testAnswersListElement.length;
             //hide score screen
-            chainCl(scoreSection).add('hide-to-left-js')
-                    .remove('show-from-right-js');
-                      
+            chainCl(finalScoreSection).add('js-hide-to-left').remove('js-show-from-right');
+
             //show Main screen
-           chainCl(categoriesContainer).remove('hide-to-left-js')
-                .add('show-from-right-js');
-            
-        //clear everything
-            question = undefined;
+            chainCl(categoriesContainerElement).remove('js-hide-to-left').add('js-show-from-right');
+
+            //clear everything
+            questions = undefined;
             count = 0;
-            correctCounter = 0;
-            answersDOM.textContent = '';
-            checkIfHighlighted();
-            btnNext.classList.add('btn__next--hidden-js');
+            correctQuestionsCounter = 0;
+            testAnswersListElement.textContent = '';
+            checkIfHighlighted(0, answersLength, testAnswersListElement);
+            testNextButtonElement.classList.add('js-btn__next--hidden');
         }
-        })();
-    });
-})();
+
+        //event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            categoriesContainerElement.addEventListener('click', loadQuestion, false);
+            testNextButtonElement.addEventListener('click', nextQuestion, false);
+            testQuestionContainerElement.addEventListener('click', checkAnswer, false);
+            btnBackHomeElement.addEventListener('click', backToHome, false);
+        });
+    }());
+}());

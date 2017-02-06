@@ -1,4 +1,5 @@
 //corrcet answers counter  section
+
 .score-section {
     width: calc(30% + 14em);
     height: auto;
@@ -15,35 +16,34 @@
 .score-section__title {
     width: 100%;
     font-size: 3rem;
-    border-bottom: 1px solid $mainGreen;   
+    border-bottom: 1px solid $mainGreen;
 }
 
 .score-section__information {
     display: inline-block;
     border-right: 1px solid $mainGreen;
     padding-right: 0.3125em;
-    
-    @include tablet  {
+    @include tablet {
         border: none;
         margin: 1em;
     }
 
     span {
-    display: block;
-    font-size: 2em;
+        display: block;
+        font-size: 2em;
     }
 }
 
 .score-section__category {
     font-weight: 700;
-    }
+}
 
 .score-section__score {
-        display: inline-block;
-        position: relative;
-        padding-left: 0.3125em;
-        
+    display: inline-block;
+    position: relative;
+    padding-left: 0.3125em;
 }
+
 .score-section__score__val {
     width: 6rem;
     font-size: 5rem;
@@ -52,16 +52,16 @@
     padding-right: 2rem;
 
     &:after {
-    content: '';
-    width: 90px;
-    margin-top: -48%;
-    margin-left: 70%;
-    border: 1px solid red;
-    transform: rotate(120deg);
-    display: block;
+        content: '';
+        width: 90px;
+        margin-top: -48%;
+        margin-left: 70%;
+        border: 1px solid red;
+        transform: rotate(120deg);
+        display: block;
     }
 }
 
 .score-section__score__total {
-        font-size: 5em;
+    font-size: 5em;
 }

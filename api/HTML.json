@@ -15,7 +15,6 @@
             "valid": true
         }]
     }, {
-        "question": "Using Emmet the following ul>li*8 will add",
         "answers": [{
             "answer": "8 <ul> elements with 1 <li> element",
             "valid": false
@@ -111,7 +110,7 @@
         }]
     },
     {
-        "question": "Which one  of the following <input> types is invalid : hidden, time, input, color ?",
+        "question": "Which one  of the following '<input>' types is invalid : hidden, time, input, color ?",
         "answers": [{
             "answer": "hidden",
             "valid": false

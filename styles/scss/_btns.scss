@@ -1,34 +1,34 @@
-@import '_mixins.scss';
-//styles for all btns
+@import '_mixins.scss'; //styles for all btns
+
 .btn {
     display: block;
-    padding:  0.165em 0.935em;
+    padding: 0.165em 0.935em;
     border-radius: 0.365em;
     font-size: 1.5em;
     font-weight: bold;
     text-transform: uppercase;
-    cursor: pointer; 
+    cursor: pointer;
 }
+
 .btn__next {
     position: absolute;
-    right: 0%;
+    right: 0;
     top: 110%;
     border: 1px solid $mainGreen;
     border-radius: 0;
     color: $mainGreen;
-    
-    @include tablet  {
-            top: calc(100% + 1.8rem);
+    @include tablet {
+        top: calc(100% + 1.8rem);
     }
 
     &:hover {
         color: white;
     }
 }
+
 .btn__select-category {
     width: 7.5em;
-    margin:0 auto;
-    margin-bottom: 0.8em;
+    margin: 0 auto 0.8em;
     background-color: $mainGreen;
     color: $bgColor;
     transition: all ease 0.4s;
@@ -38,7 +38,8 @@
         color: white;
     }
 }
-.btn__next--hidden-js {
+
+.js-btn__next--hidden {
     display: none;
 }
 
@@ -53,4 +54,3 @@
         color: white;
     }
 }
- 

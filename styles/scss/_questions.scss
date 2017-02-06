@@ -1,10 +1,10 @@
 @import '_mixins.scss';
 
-.questions-container {
+.test {
     width: 100%;
 }
 
-.questions { 
+.question-container {
     width: 70%;
     padding: 1.5em;
     position: relative;
@@ -15,36 +15,33 @@
     perspective: 200px;
     perspective-origin: right;
     transform-style: preserve-3d;
-
-    @include tablet  {
+    @include tablet {
         width: 80%;
     }
-
-    @include landscape  {
+    @include landscape {
         width: 93%;
         padding: 0.5em;
     }
 }
 
-.questions__title {
+.test__headline {
     margin-bottom: 1em;
     font-size: 2em;
     font-weight: 700;
     text-align: center;
     color: white;
-
     @include tablet {
         margin-bottom: 0.5em;
     }
 }
 
-.questions__question {
+.question {
     width: 90%;
-    text-align: center;  
+    text-align: center;
     margin: 0 auto;
 }
 
-.questions__answers {
+.answer {
     width: 33%;
     height: 3em;
     padding: 1em;
@@ -56,45 +53,44 @@
     font-size: 0.9rem;
     cursor: pointer;
     transition: ease-in 0.4s;
+
     &:hover {
         border: 1px solid white;
     }
-
     @include tablet {
         width: 90%;
         height: auto;
         display: block;
-        margin:0 auto;
-        margin-top: 1em;
+        margin: 1em auto 0;
     }
-
     @include landscape {
         display: inline-block;
         width: 40%;
     }
 }
 
-.questions__answers--correct-js {
-    background-color:#02a22c;
+.js-answer--correct {
+    background-color: #02a22c;
     animation: correctAnswer;
     animation-timing-function: ease-in;
     animation-duration: 0.4s;
     animation-fill-mode: forwards;
-
     @keyframes correctAnswer {
-        0% {  opacity: 0.5;          
+        0% {
+            opacity: 0.5;
         }
+
         100% {
             opacity: 1;
         }
     }
 }
 
-.questions__answers--wrong-js {
-    background-color:#c80a22;
+.js-answer--wrong {
+    background-color: #c80a22;
 }
 
-.questions__counter {
+.question-count {
     position: absolute;
     top: 94%;
     right: calc(0% - 0.7em);
@@ -102,40 +98,41 @@
     font-size: 1.5rem;
     background-color: $mainGreen;
     transform-style: inherit;
-    
     @include landscape {
-       top: 100%;
+        top: 100%;
     }
-//3d  side
-    &:after {
-    content: '';
-    position: absolute;
-    top: 0%;
-    left: 100%;
-    height: 30px;
-    width: 25px;
-    background-color: $darkGreen;
-    transform-origin: left;
-    transform: rotateY(126deg);
-    }
+    //3d  side
 
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 100%;
+        height: 30px;
+        width: 25px;
+        background-color: $darkGreen;
+        transform-origin: left;
+        transform: rotateY(126deg);
+    }
 }
 // questions counters
-.questions__current-count {
+
+.question-count__current {
     padding-right: 5px;
 }
 
-.questions__total-count {
+.question-count__total {
     display: inline-block;
     padding-left: 5px;
-         &:after {
-         content: '';
-         display: inline-block;
-         position: absolute;
-         top: 12px;
-         right: 22px;
-         width: 1em;
-         border: 1px solid white;
-         transform: rotate(120deg);
-     }
+
+    &:after {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        top: 12px;
+        right: 22px;
+        width: 1em;
+        border: 1px solid white;
+        transform: rotate(120deg);
+    }
 }

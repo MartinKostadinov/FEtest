@@ -1,37 +1,37 @@
 @import '_mixins.scss';
-.main-screen {
+
+.categories-cont {
     width: 100%;
     height: auto;
     margin-top: 1.5em;
     text-align: center;
     position: relative;
     perspective: 1000px;
-    
     @include landscape {
         margin-top: 0.5em;
     }
 }
-.main-screen__title {
+
+.categories__title {
     width: 100%;
     text-align: center;
     font-size: 3rem;
     font-weight: 900;
     text-transform: uppercase;
-         
-     @include tablet {
-      font-size: 1.5rem;   
-     }
+    @include tablet {
+        font-size: 1.5rem;
+    }
 }
-.main-screen__rules {
+
+.categories__rules {
     height: auto;
     margin: 0 auto;
     padding: 1.5em;
     font-weight: bold;
     color: white;
 }
-
 //styles for  choose category window
-.main-screen__categories {
+.categories {
     width: calc(30% + 14em);
     height: auto;
     margin: 0 auto;
@@ -42,16 +42,17 @@
     text-align: center;
 }
 
-.main-screen__categories__title {
+.categories__headline {
     text-align: center;
     font-size: 2rem;
 }
-.main-screen__categories-container {
+
+.categories__list {
     display: inline-block;
     padding: 0.8em;
     text-align: center;
 }
 
-.main-screen__item {
+.categories__item {
     display: inline-block;
 }

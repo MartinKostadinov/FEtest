@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
@@ -7,50 +8,51 @@
     <link rel="stylesheet" href="styles/css/main.css">
     <title>Front-end Tests</title>
 </head>
+
 <body>
     <header>
-        <h1 class="main-screen__title">Front-end Test</h1>  
+        <h1 class="categories__title">Front-end Test</h1>
     </header>
     <main>
-        <section class="main-screen">
-            <article class="main-screen__categories">
-                <h2 class="main-screen__categories__title">Select Category</h2>
-                <ul class="main-screen__categories-container">
-                <li class="main-screen__item"><a href="" class="btn btn__select-category ">HTML</a></li>
-                <li class="main-screen__item"><a href="" class="btn btn__select-category ">CSS</a></li>
-                </ul> 
+        <section id="categories-container" class="categories-cont">
+            <article class="categories">
+                <h2 class="categories__headline">Select Category</h2>
+                <ul class="categories__list">
+                    <li class="categories__item"><a href="" class="btn btn__select-category ">HTML</a></li>
+                    <li class="categories__item"><a href="" class="btn btn__select-category ">CSS</a></li>
+                </ul>
             </article>
         </section>
-        <section class="questions-container hide-to-left-js hidden-js">
-            <h2 class="questions__title"></h2>
-            <article class="questions">               
-                <p class="questions__question"></p>
+        <section id="test-container" class="test js-hide-to-left js-hidden">
+            <h2 class="test__headline"></h2>
+            <article class="question-container">
+                <p class="question"></p>
                 <ul>
-                    <li class="questions__answers"></li>
-                    <li class="questions__answers"></li>
-                    <li class="questions__answers"></li>
-                    <li class="questions__answers"></li>
+                    <li class="answer"></li>
+                    <li class="answer"></li>
+                    <li class="answer"></li>
+                    <li class="answer"></li>
                 </ul>
-                <div class="questions__counter">
-                    <span class="questions__current-count"></span>
-                    <span class="questions__total-count"></span>
+                <div class="question-count">
+                    <span class="question-count__current"></span>
+                    <span class="question-count__total"></span>
                 </div>
-                 <a href="" class="btn btn__next btn__next--hidden-js">Next</a>
+                <a href="" class="btn btn__next js-btn__next--hidden">Next</a>
             </article>
 
         </section>
         <section>
-            <article class="score-section hide-to-left-js  hidden-js">
+            <article id="final-score" class="score-section js-hide-to-left  js-hidden">
                 <h2 class="score-section__title">FINAL SCORE</h2>
                 <div class="score-section__information">
                     <span>Category:</span>
                     <span class="score-section__category"></span>
-                    </div>
+                </div>
                 <div class="score-section__score ">
                     <span class="score-section__score__val"></span>
                     <span class="score-section__score__total"></span>
-                    </div>
-                    <a href="" class="btn btn__back-home">Back to Home</a>
+                </div>
+                <a href="" class="btn btn__back-home">Back to Home</a>
             </article>
         </section>
     </main>
@@ -59,4 +61,5 @@
     </footer>
     <script src="scripts/index.js"></script>
 </body>
+
 </html>
