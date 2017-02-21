@@ -7,20 +7,6 @@
     text-align: center;
     position: relative;
     perspective: 1000px;
-    @include landscape {
-        margin-top: 0.5em;
-    }
-}
-
-.categories__title {
-    width: 100%;
-    text-align: center;
-    font-size: 3rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    @include tablet {
-        font-size: 1.5rem;
-    }
 }
 
 .categories__rules {
@@ -30,9 +16,10 @@
     font-weight: bold;
     color: white;
 }
+///////////////
 //styles for  choose category window
 .categories {
-    width: calc(30% + 14em);
+    width: calc(30% + 13em);
     height: auto;
     margin: 0 auto;
     box-sizing: border-box;

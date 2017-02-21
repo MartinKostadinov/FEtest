@@ -3,52 +3,45 @@
 .test {
     width: 100%;
 }
-
-.question-container {
-    width: 70%;
-    padding: 1.5em;
-    position: relative;
-    margin: 0 auto;
+.test__headline {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0.4rem;
     text-align: center;
+}
+.question-container {
     border: 1px solid $mainGreen;
     color: white;
+    margin: 0 auto;
+    padding: 0.8em;
     perspective: 200px;
     perspective-origin: right;
+    position: relative;
+    text-align: center;
     transform-style: preserve-3d;
-    @include tablet {
-        width: 80%;
-    }
-    @include landscape {
+    width: 85%;
+  
+    @include medium {
         width: 93%;
         padding: 0.5em;
     }
-}
 
-.test__headline {
-    margin-bottom: 1em;
-    font-size: 2em;
-    font-weight: 700;
-    text-align: center;
-    color: white;
-    @include tablet {
-        margin-bottom: 0.5em;
+    @include large {
+        width: calc(18vw + 40em);
+        padding: 1em;
+    }
+
+    @include landscape {
+        font-size: 0.8rem;
     }
 }
 
-.question {
-    width: 90%;
-    text-align: center;
-    margin: 0 auto;
-}
-
 .answer {
-    width: 33%;
-    height: 3em;
-    padding: 1em;
-    margin-top: 1em;
-    margin-left: 1em;
-    display: inline-block;
-    vertical-align: top;
+    width: 91%;
+    height: auto;
+    display: block;
+    margin: 1em auto 0; 
+    padding: 0.5em;   
     border: 1px solid $mainGreen;
     font-size: 0.9rem;
     cursor: pointer;
@@ -57,15 +50,15 @@
     &:hover {
         border: 1px solid white;
     }
-    @include tablet {
-        width: 90%;
-        height: auto;
-        display: block;
-        margin: 1em auto 0;
-    }
-    @include landscape {
-        display: inline-block;
-        width: 40%;
+ 
+    @include large {
+        display: inline-block;  
+        height: 2em;      
+        margin-top: 1em;
+        margin-left: 0.5em;
+        padding: 0.8em 0.1em;
+        vertical-align: top;
+        width: 48%;
     }
 }
 
@@ -92,15 +85,12 @@
 
 .question-count {
     position: absolute;
-    top: 94%;
+    top: 97%;
     right: calc(0% - 0.7em);
     padding: 0.2rem;
-    font-size: 1.5rem;
+    font-size: 1rem;
     background-color: $mainGreen;
     transform-style: inherit;
-    @include landscape {
-        top: 100%;
-    }
     //3d  side
 
     &:after {
@@ -108,15 +98,14 @@
         position: absolute;
         top: 0;
         left: 100%;
-        height: 30px;
-        width: 25px;
+        height: 25px;
+        width: 20px;
         background-color: $darkGreen;
         transform-origin: left;
         transform: rotateY(126deg);
     }
 }
 // questions counters
-
 .question-count__current {
     padding-right: 5px;
 }

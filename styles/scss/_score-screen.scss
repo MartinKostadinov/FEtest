@@ -1,36 +1,37 @@
 //corrcet answers counter  section
 
 .score-section {
-    width: calc(30% + 14em);
+    border: 1px solid $mainGreen;
+    box-sizing: border-box;
+    color: white;
     height: auto;
+    margin: 0 auto;
+    margin-top: 2em;
+    padding: 0.5em 0;
     position: absolute;
     right: 0;
-    margin: 0 auto;
-    box-sizing: border-box;
-    border: 1px solid $mainGreen;
-    padding: 1em 0;
-    color: white;
     text-align: center;
+    width: calc(30% + 13em);
+
+    @include medium {
+
+    }
 }
 
 .score-section__title {
-    width: 100%;
-    font-size: 3rem;
     border-bottom: 1px solid $mainGreen;
+    font-size: 2.5rem;
+    padding-bottom: 0.5rem;
+    width: 100%;
 }
 
 .score-section__information {
     display: inline-block;
     border-right: 1px solid $mainGreen;
-    padding-right: 0.3125em;
-    @include tablet {
-        border: none;
-        margin: 1em;
-    }
-
+    padding: 0.3125em;
     span {
         display: block;
-        font-size: 2em;
+        font-size: 1.5em;
     }
 }
 
@@ -41,27 +42,29 @@
 .score-section__score {
     display: inline-block;
     position: relative;
-    padding-left: 0.3125em;
 }
-
+////////////
+//Final user score
 .score-section__score__val {
-    width: 6rem;
-    font-size: 5rem;
-    color: $mainGreen;
+    color: #32fa64;
     display: inline-block;
-    padding-right: 2rem;
+    height: 4rem;
+    font-size: 3.5rem;
+    text-align: center;
+    width: 6rem;
 
     &:after {
-        content: '';
-        width: 90px;
-        margin-top: -48%;
-        margin-left: 70%;
         border: 1px solid red;
-        transform: rotate(120deg);
+        content: '';
         display: block;
+        margin-top: -35%;
+        margin-left: 60%;
+        transform: rotate(120deg);
+        width: 60px;
     }
 }
-
+////////////
+//Total questions count
 .score-section__score__total {
-    font-size: 5em;
+    font-size: 3.5rem;
 }

@@ -1,12 +1,18 @@
-$tablet-width: 840px;
-$landscape: 560px;
-@mixin tablet {
-     @media screen and (max-width: #{$tablet-width}){
+$medium-width: 560px;
+$large: 960px;
+@mixin medium {
+     @media screen and (min-width: #{$medium-width}) {
         @content;
     }
 }
+
+@mixin large {
+    @media screen and (min-width: #{$large}) {
+        @content;
+    } 
+}
 @mixin landscape {
-     @media screen and (min-width: #{$landscape}) and (max-width: #{$tablet-width}) and (orientation: landscape){
+     @media screen and (min-width: #{$medium-width}) and (max-width: #{$large}) and (orientation: landscape){
         @content;
     }
 }
